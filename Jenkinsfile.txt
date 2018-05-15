@@ -1,36 +1,38 @@
-// Declarative // 
-pipeline {     
-		agent any
-    	stages {         
-				stage('Build') {             
-					steps {                 
-							echo 'Building..'             
-						}         
-					}         
-					
-				stage('Test') {             
-					steps {                 
-							echo 'Testing..'             
-						}         
-					}         
-					
-				stage('Deploy') {             
-					steps {                 
-							echo 'Deploying....'             
-						}         
-					}     
-				} 
-		} 
-		// Script // 
-		
-		node {     
-				stage('Build') {         
-						echo 'Building....'     
-					}     
-				stage('Test') {         
-						echo 'Building....'     
-					}     
-				stage('Deploy') {         
-						echo 'Deploying....'     
-					} 
-			}
+node {
+ 	// Clean workspace before doing anything
+    deleteDir()
+
+    try {
+        stage ('Clone') {
+        	checkout scm
+        }
+	stage ('SonarCube') {
+        	 "echo 'shell scripts to build project...'"
+        }
+	
+        stage ('Build') {
+        	// mvn clean install
+		 "echo 'shell scripts to build project...'"
+        }
+        stage ('Tests') {
+	        parallel 'static': {
+	             "echo 'shell scripts to run static tests...'"
+	        },
+	        'unit': {
+	             "echo 'shell scripts to run unit tests...'"
+	        },
+	        'integration': {
+	             "echo 'shell scripts to run integration tests...'"
+	        }
+        }
+	stage ('Code Coverage') {
+             "echo 'shell scripts to deploy to server...'"
+      	}
+      	stage ('Deploy') {
+             "echo 'shell scripts to deploy to server...'"
+      	}
+    } catch (err) {
+        currentBuild.result = 'FAILED'
+        throw err
+    }
+}
