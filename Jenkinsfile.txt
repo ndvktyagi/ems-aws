@@ -21,9 +21,11 @@ node {
 	             "echo 'shell scripts to run static tests...'"
 	        },
 	        'unit': {
+		     sh "mvn test"
 	             "echo 'shell scripts to run unit tests...'"
 	        },
 	        'integration': {
+		     sh "mvn verify"
 	             "echo 'shell scripts to run integration tests...'"
 	        }
         }
