@@ -39,7 +39,7 @@ node {
 		])
       	}
       	stage ('Deploy') {
-	      sh 'cp C:\Users\vishal.ty\.m2\repository\com\aws\codestar\projecttemplates\HelloWorld\1.0\HelloWorld-1.0.war C:\Software\apache-tomcat-8.5.31\webapps\'
+	      sh 'cp C:/Users/vishal.ty/.m2/repository/com/aws/codestar/projecttemplates/HelloWorld/1.0/HelloWorld-1.0.war C:/Software/apache-tomcat-8.5.31/webapps/'
              "echo 'shell scripts to deploy to server...'"
       	}
     } catch (err) {
