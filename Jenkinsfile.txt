@@ -17,18 +17,7 @@ node {
 		 "echo 'shell scripts to build project...'"
         }
         stage ('Tests') {
-	        parallel 'static': {
-	             "echo 'shell scripts to run static tests...'"
-	        },
-	        'unit': {
-		     sh "mvn test"
-	             "echo 'shell scripts to run unit tests...'"
-	        },
-	        'integration': {
-		    sh "mvn verify"
-	             "echo 'shell scripts to run integration tests...'"
-		    
-	        }
+	       junit 'C:/Program Files (x86)/Jenkins/workspace/ems/target/surefire-reports/TEST-com.aws.codestar.projecttemplates.controller.HelloWorldControllerTest.xml'
         }
 	stage ('Code Coverage') {
              
@@ -43,13 +32,7 @@ node {
 	      sh 'cp C:/Users/vishal.ty/.m2/repository/com/aws/codestar/projecttemplates/HelloWorld/1.0/HelloWorld-1.0.war C:/Software/apache-tomcat-8.5.31/webapps/'
              "echo 'shell scripts to deploy to server...'"
       	}
-	post {
-        always {
-            archive "target/**/*"
-           junit 'C:/Program Files (x86)/Jenkins/workspace/ems/target/surefire-reports/TEST-com.aws.codestar.projecttemplates.controller.HelloWorldControllerTest.xml'
-                     //junit '**/target/*.xml'
-        }
-    }
+	
     } catch (err) {
         currentBuild.result = 'FAILED'
         throw err
