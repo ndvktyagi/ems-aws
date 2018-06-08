@@ -7,9 +7,9 @@ node {
         	checkout scm
         }
 	stage ('SonarCube') {
-        	// withSonarQubeEnv('SonarCube') {
-		// 	sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
-    		//}
+        	 withSonarQubeEnv('SonarCube') {
+		 	sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+    		 }
         }
 	
         stage ('Build') {
@@ -27,6 +27,8 @@ node {
 	        'integration': {
 		     sh "mvn verify"
 	             "echo 'shell scripts to run integration tests...'"
+		     sh 'make check || true' 
+                     junit '**/target/*.xml'
 	        }
         }
 	stage ('Code Coverage') {
