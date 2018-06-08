@@ -28,7 +28,7 @@ node {
 		     sh "mvn verify"
 	             "echo 'shell scripts to run integration tests...'"
 		     sh 'make check || true' 
-		     junit 'C:/Program Files (x86)/Jenkins/workspace/ems/target/surefire-reports/*.xml'
+		     junit 'C:/Program Files (x86)/Jenkins/workspace/ems/target/surefire-reports/TEST-com.aws.codestar.projecttemplates.controller.HelloWorldControllerTest.xml'
                      //junit '**/target/*.xml'
 	        }
         }
